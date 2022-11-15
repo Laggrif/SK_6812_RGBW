@@ -1,9 +1,13 @@
+import os.path
 import time
 
 from rpi_ws281x import *
 
 import sk_6812_rgbw_laggrif.Strandtest as Strandtest
 import sys
+
+if not os.path.isfile(os.path.dirname(__file__) + "/previousColor.txt"):
+    open(os.path.dirname(__file__) + "/previousColor.txt", 'w').close()
 
 # LED strip configuration:
 
@@ -81,7 +85,7 @@ def InitStrip(alpha):
     return strip
 
 def Write(colors, alpha):
-    f = open("/Shared/previousColor.txt", "w")
+    f = open(os.path.dirname(__file__) + "/previousColor.txt", "w")
     f.write(colors + '\n')
     f.write(alpha)
     f.close()
@@ -131,9 +135,9 @@ def run(argv):
                 arg1 = "0,0,40,255"
 
             else:
-                sys.exit(f"Bad input, input was \"{sys.argv[1]}\"")
+                sys.exit(f"Bad input, input was \"{argv[1]}\"")
 
-            f = open("/Shared/previousColor.txt", "r")
+            f = open(os.path.dirname(__file__) + "/previousColor.txt", "r")
             content = f.readlines()
             oldColors = Decoder(content[0])
             oldAlpha = int(content[1])
