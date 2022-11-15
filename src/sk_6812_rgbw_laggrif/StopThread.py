@@ -1,6 +1,5 @@
-import time
 import threading
-import Colors
+import sk_6812_rgbw_laggrif.Colors as Colors
 
 class RainbowThread(threading.Thread):
     def __init__(self, strip, *args, **kwargs):
